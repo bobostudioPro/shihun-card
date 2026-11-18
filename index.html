@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>诗魂卡牌 · 唐诗宋词集换式卡牌</title>
+<meta name="description" content="手撕锡箔包装，抽出唐诗宋词全息卡牌。越冷门的诗越稀有，生成分享图一键发朋友圈。">
+<meta name="theme-color" content="#171a24">
+<meta property="og:title" content="诗魂卡牌 · 唐诗宋词集换式卡牌">
+<meta property="og:description" content="手撕包装抽卡，你能抽出比这更稀有的诗吗？">
+<meta property="og:type" content="website">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a2350'/><text x='50' y='68' font-size='56' text-anchor='middle' fill='%23e8c477' font-family='serif'>诗</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body data-skin="青花">
+
+<!-- 开场 -->
+<div class="intro">
+  <div class="glyph">诗</div>
+  <h1>诗 魂 卡 牌</h1>
+  <p>唐诗宋词 · 集换式卡牌<br>手撕锡箔包装，抽出沉睡千年的诗魂<br>越冷门的诗，越稀有</p>
+  <button class="enter" type="button">开 启 抽 卡</button>
+</div>
+
+<!-- 顶部 HUD -->
+<header class="hud">
+  <div class="brand"><b>诗魂卡牌</b><i>SHIHUN CARDS</i></div>
+  <div class="hud-right">
+    <button class="rbtn mute-btn" type="button" aria-label="静音" aria-pressed="false">
+      <svg class="sound-icon" viewBox="0 0 24 24"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4z"/><path d="M15.5 9.2a4 4 0 0 1 0 5.6M18.2 6.8a7.5 7.5 0 0 1 0 10.4"/></svg>
+      <svg class="muted-icon" viewBox="0 0 24 24" style="display:none"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4z"/><path d="m15.5 9.5 5 5m0-5-5 5"/></svg>
+    </button>
+    <button class="rbtn collection-btn" type="button" aria-label="图鉴">
+      <svg viewBox="0 0 24 24"><rect x="4" y="3" width="13" height="17" rx="2"/><path d="M8 7h5M8 11h5M8 15h3"/><path d="M19 7v13a2 2 0 0 1-2 2H8"/></svg>
+      <span class="num">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- 舞台 -->
+<main class="stage">
+  <i class="ground" id="ground"></i>
+  <div class="scene" id="scene">
+    <div class="flow" id="flow" aria-hidden="true">
+      <i class="bloom"></i>
+      <svg class="rays" id="rays" viewBox="0 0 100 76"></svg>
+    </div>
+    <div class="pack" id="pack">
+      <div class="skin front" aria-hidden="true">
+        <b class="mark">诗魂<em>POETRY SOUL</em></b>
+        <span class="seal">壹</span>
+        <div class="hero" id="hero"></div>
+        <span class="foot l">唐诗宋词</span>
+        <span class="foot r">5 张/包</span>
+        <i class="tearline"></i>
+      </div>
+      <div class="skin back" aria-hidden="true">
+        <i class="fin">詩</i>
+        <b class="mark sm" style="left:12%;top:14%;font-size:calc(var(--pw)*.11)">诗魂</b>
+        <p class="blurb"><b>5 张</b>全息诗卡<br>每包含 <b>1 张</b> 珍品以上<br>越冷门越稀有</p>
+        <i class="code"></i>
+      </div>
+      <div class="flap" id="flap" aria-hidden="true"></div>
+      <button class="hit" id="hit" type="button" aria-label="诗卡包，5张。横向拖动撕开，或轻点自动撕开。"></button>
+    </div>
+  </div>
+  <canvas class="fx" id="fx" aria-hidden="true"></canvas>
+</main>
+
+<!-- 底部操作栏 -->
+<div class="dock">
+  <div class="dock-row">
+    <button class="pill gold" id="btn-share" type="button">📸 分享战报</button>
+    <button class="pill" id="btn-dex" type="button">📖 我的图鉴</button>
+  </div>
+  <p class="hint" id="hint">按住包装横向拖动 · 撕开抽卡</p>
+</div>
+
+<!-- 抽卡汇总 -->
+<div class="summary" id="summary"></div>
+
+<!-- 图鉴 -->
+<div class="dex">
+  <div class="dex-head"><b>卡 牌 图 鉴</b><span id="dex-count"></span><button class="dex-close" type="button">✕</button></div>
+  <div class="dex-filter" id="dex-filter"></div>
+  <div class="dex-body" id="dex-body"></div>
+</div>
+
+<!-- 分享 -->
+<div class="share-pop" id="share-pop"></div>
+
+<!-- toast -->
+<div class="toast" id="toast"></div>
+
+<p class="sr" id="live" aria-live="polite"></p>
+
+<!-- 数据与引擎 -->
+<script src="js/data.js"></script>
+<script src="js/art.js"></script>
+<script src="js/skins.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/cards.js"></script>
+<script src="js/share.js"></script>
+<script src="js/dex.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
